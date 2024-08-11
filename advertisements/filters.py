@@ -1,12 +1,13 @@
 from django_filters import rest_framework as filters
 from advertisements.models import Advertisement
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class AdvertisementFilter(filters.FilterSet):
-    """Фильтры для объявлений."""
-
     created_at = filters.DateFromToRangeFilter()
-    status = filters.CharFilter()
+    creator = filters.ModelChoiceFilter(queryset=User.objects.all())
 
     class Meta:
         model = Advertisement

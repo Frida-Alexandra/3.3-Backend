@@ -1,8 +1,6 @@
 from rest_framework.permissions import BasePermission
 
 
-class OwnerOrRead(BasePermission):
+class IsAdvertisementOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
-        if request.method == 'GET':
-            return True
-        return obj.creator == request.user
+        return request.user.is_authenticated and obj.creator == request.user
